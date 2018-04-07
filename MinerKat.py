@@ -121,12 +121,14 @@ def main():
         '''                          
     print(text)
 
+    var privatKey = input('Coloque sua chave privada aqui: ');
+    
     print("\nAo minerar um bloco veja no log suas informações!")
 
     global blockIndexBlockChain
 
     #Instanciar a carteira baseada na chave sua privada
-    carteira  = KeyPair('')
+    carteira  = KeyPair(privateKey)
 
     #Inicializo minha thread de verificação de index da blockchain
     tVerification = threading.Thread(target=checkIndexBlockChain, args=(carteira,))
