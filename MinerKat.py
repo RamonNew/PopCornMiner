@@ -13,6 +13,7 @@ blockIndexBlockChain = 0
 def sha256(bytestr):
     return _sha256(bytestr).digest()
 
+#Função para pegar primeiramente o index do bloco
 def getIndexBlockChain(carteira):
     global blockIndexBlockChain
     res = requests.get(f'{url}/block/minable/{carteira.public_key}')
@@ -21,6 +22,7 @@ def getIndexBlockChain(carteira):
     block = Block.from_dict(block)
     blockIndexBlockChain = block.index
 
+#Função para checar o index do block, para verificar se ele mudou
 def checkIndexBlockChain(carteira):
     while(True):
         time.sleep(1);
@@ -36,6 +38,7 @@ def checkIndexBlockChain(carteira):
         #print('bloco na block chain: ' + str(block.index))
         time.sleep(10)
 
+#Função para enviar o bloco para o servidor da blockchain
 def sendToBLockChain(block):
     #Transformo meu objeto bloco em json
     jsonBlock = dict(block)
@@ -54,6 +57,7 @@ def sendToBLockChain(block):
         print(res);
         print('\-\-/-\-/-\-/-\-/-\-/-\-/-\-/-\-/-/')
 
+#Função para gravar logs
 def logInfo(block, inicio, fim, carteira, saldoNovo, saldoAntigo, minerado):
     #Gravando logs
     arq = open('RelatorioMiner1.txt', 'a')
@@ -71,6 +75,7 @@ def logInfo(block, inicio, fim, carteira, saldoNovo, saldoAntigo, minerado):
     arq.close()
     time.sleep(1);
 
+#Função miner Principal
 def miner(block, dificuldade, carteira):
     #Verifico meu saldo inicial
     res = requests.get(f'{url}/balance/{carteira.public_key}');
@@ -104,6 +109,7 @@ def miner(block, dificuldade, carteira):
     #Gravo logs
     logInfo(block, inicio, fim, carteira, saldoNovo, saldoAntigo, "sim")
 
+#Função Main
 def main():
     #Inicio da função Main
     text = '''         _  __     _       _    _           __  __ _                 
